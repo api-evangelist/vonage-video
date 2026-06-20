@@ -1,0 +1,120 @@
+aid: vonage-video
+name: Vonage Video API
+review:
+  question: Does the Vonage Video API expose a documented public WebSocket / streaming API suitable for AsyncAPI modeling?
+  answer: true
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    The Vonage Video platform has real asynchronous and streaming surfaces:
+    (1) the Audio Connector REST operation establishes a server-side
+    WebSocket that streams a session's audio to a customer-controlled
+    wss:// endpoint, and (2) the platform pushes server-side event
+    callbacks (webhooks) for Session Monitoring, Archiving, Broadcast,
+    SIP, Captions, and Experience Composer (Render) to a registered URL,
+    with optional secure (signed) callback verification. The browser/mobile
+    media plane itself is WebRTC, negotiated by the client SDKs and not a
+    documented public message API. An AsyncAPI document was not authored in
+    this pass; the Audio Connector WebSocket and the secure-callback
+    webhook events are the candidate channels if/when one is modeled.
+findings:
+  summary: |
+    The Vonage Video API (formerly OpenTok / TokBox) is primarily a REST
+    control plane over the Vonage Video Cloud, paired with WebRTC client
+    SDKs for the real-time media plane. Server-side REST endpoints live
+    under https://video.api.vonage.com/v2/project/{applicationId} (legacy
+    api.opentok.com paths remain documented), authenticated with a JWT
+    Bearer token. Beyond REST, two genuine asynchronous surfaces are
+    documented: the Audio Connector, which opens a WebSocket (wss://) from
+    the Vonage cloud to a customer endpoint to stream session audio, and
+    secure callbacks / webhooks that deliver session, archive, broadcast,
+    SIP, captions, and render lifecycle events to a registered URL. Signaling
+    is delivered to clients over the WebRTC data path but is driven
+    server-side via REST (POST .../signal).
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://video.api.vonage.com/v2
+      documented: true
+    - protocol: REST (legacy)
+      scheme: https
+      baseURL: https://api.opentok.com/v2
+      documented: true
+      note: Legacy OpenTok host; still documented for the same v2 operations.
+    - protocol: WebSocket
+      scheme: wss
+      documented: true
+      note: Audio Connector streams session audio from the Vonage cloud to a customer-controlled WebSocket endpoint, started via POST .../audio/connector.
+    - protocol: Webhooks
+      scheme: https
+      documented: true
+      note: Secure callbacks deliver Session Monitoring, Archiving, Broadcast, SIP, Captions, and Render events to a registered URL; signed for verification.
+    - protocol: WebRTC
+      scheme: srtp
+      documented: true
+      note: Real-time audio/video media plane negotiated by the client SDKs; not a documented public message API.
+  endpointsConfirmedRest:
+    - POST   https://video.api.vonage.com/session/create
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/connection
+    - DELETE https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/connection/{connectionId}
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/migrate
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/stream
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/stream/{streamId}
+    - PUT    https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/stream
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/mute
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/stream/{streamId}/mute
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/signal
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/connection/{connectionId}/signal
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/archive
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/archive
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/archive/{archiveId}
+    - DELETE https://video.api.vonage.com/v2/project/{applicationId}/archive/{archiveId}
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/archive/{archiveId}/stop
+    - PUT    https://video.api.vonage.com/v2/project/{applicationId}/archive/{archiveId}/layout
+    - PATCH  https://video.api.vonage.com/v2/project/{applicationId}/archive/{archiveId}/streams
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/broadcast
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/broadcast
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/broadcast/{broadcastId}
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/broadcast/{broadcastId}/stop
+    - PUT    https://video.api.vonage.com/v2/project/{applicationId}/broadcast/{broadcastId}/layout
+    - PATCH  https://video.api.vonage.com/v2/project/{applicationId}/broadcast/{broadcastId}/streams
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/dial
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/play-dtmf
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/session/{sessionId}/connection/{connectionId}/play-dtmf
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/captions/{captionsId}/start
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/captions/{captionsId}/stop
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/render
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/render
+    - GET    https://video.api.vonage.com/v2/project/{applicationId}/render/{renderId}
+    - DELETE https://video.api.vonage.com/v2/project/{applicationId}/render/{renderId}
+    - POST   https://video.api.vonage.com/v2/project/{applicationId}/audio/connector
+sources:
+  - url: https://developer.vonage.com/en/api/video
+    type: APIReference
+    note: Primary Vonage Video REST API reference; v2 operations under video.api.vonage.com.
+  - url: https://tokbox.com/developer/rest/
+    type: APIReference
+    note: Legacy OpenTok REST reference; same v2 operations on api.opentok.com.
+  - url: https://developer.vonage.com/en/video/guides/session-monitoring
+    type: Documentation
+    note: Session monitoring webhook callbacks for session/connection/stream events.
+  - url: https://developer.vonage.com/en/video/guides/secure-callbacks
+    type: Documentation
+    note: Secure (signed) callbacks for session, archive, broadcast, SIP, captions, and render events.
+  - url: https://developer.vonage.com/en/video/guides/signaling
+    type: Documentation
+    note: Server-side signaling driven via REST POST .../signal; delivered to clients over the WebRTC data path.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    Real asynchronous surfaces (Audio Connector WebSocket and secure
+    callback webhooks) exist and are documented. A dedicated Webhooks
+    sub-API was included in apis.yml to represent the callback surface. An
+    AsyncAPI document was not authored in this pass; if modeled later, the
+    Audio Connector wss:// channel and the secure-callback event types are
+    the channels to capture.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

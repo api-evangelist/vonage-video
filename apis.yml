@@ -1,0 +1,158 @@
+aid: vonage-video
+url: https://raw.githubusercontent.com/api-evangelist/vonage-video/refs/heads/main/apis.yml
+name: Vonage Video API
+kind: company
+description: Vonage Video API (formerly OpenTok / TokBox) is a programmable live video
+  platform for building real-time interactive video, voice, and messaging into apps.
+  Its REST API on the Vonage Video Cloud creates sessions and drives advanced server-side
+  features - recording (archives), live streaming broadcasts, signaling, SIP interconnect,
+  and the Experience Composer render service - authenticated with JWT Bearer tokens.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Video
+- WebRTC
+- Live Streaming
+- Real-Time Communications
+- CPaaS
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: vonage-video:vonage-video-sessions-api
+  name: Vonage Video Sessions API
+  tags:
+  - Sessions
+  - WebRTC
+  - Connections
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.vonage.com/en/video/overview
+  baseURL: https://video.api.vonage.com/v2
+  properties:
+  - url: https://developer.vonage.com/en/video/guides/create-session/overview
+    type: Documentation
+  - url: https://developer.vonage.com/en/api/video
+    type: APIReference
+  - url: openapi/vonage-video-openapi.yml
+    type: OpenAPI
+  - url: collections/vonage-video.postman_collection.json
+    type: Postman
+  description: Create video sessions, list and force-disconnect connections, mute streams
+    and whole sessions, and migrate active sessions across media regions.
+- aid: vonage-video:vonage-video-streams-signaling-api
+  name: Vonage Video Streams & Signaling API
+  tags:
+  - Streams
+  - Signaling
+  - Moderation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.vonage.com/en/video/guides/signaling
+  baseURL: https://video.api.vonage.com/v2
+  properties:
+  - url: https://developer.vonage.com/en/video/guides/signaling
+    type: Documentation
+  - url: https://developer.vonage.com/en/api/video
+    type: APIReference
+  - url: openapi/vonage-video-openapi.yml
+    type: OpenAPI
+  - url: collections/vonage-video.postman_collection.json
+    type: Postman
+  description: Inspect individual and all streams in a session, set stream classes
+    and layout, and send server-side signals to a whole session or a single connection.
+- aid: vonage-video:vonage-video-archives-api
+  name: Vonage Video Archives API
+  tags:
+  - Archives
+  - Recording
+  - Storage
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.vonage.com/en/video/guides/archiving/overview
+  baseURL: https://video.api.vonage.com/v2
+  properties:
+  - url: https://developer.vonage.com/en/video/guides/archiving/overview
+    type: Documentation
+  - url: https://developer.vonage.com/en/api/video
+    type: APIReference
+  - url: openapi/vonage-video-openapi.yml
+    type: OpenAPI
+  - url: collections/vonage-video.postman_collection.json
+    type: Postman
+  description: Record sessions as composed or individual-stream archives - start, stop,
+    list, retrieve, and delete archives, change archive layout, and select streams.
+- aid: vonage-video:vonage-video-broadcasts-api
+  name: Vonage Video Broadcasts API
+  tags:
+  - Broadcasts
+  - Live Streaming
+  - HLS
+  - RTMP
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.vonage.com/en/video/guides/broadcast/live-streaming
+  baseURL: https://video.api.vonage.com/v2
+  properties:
+  - url: https://developer.vonage.com/en/video/guides/broadcast/live-streaming
+    type: Documentation
+  - url: https://developer.vonage.com/en/api/video
+    type: APIReference
+  - url: openapi/vonage-video-openapi.yml
+    type: OpenAPI
+  - url: collections/vonage-video.postman_collection.json
+    type: Postman
+  description: Broadcast a session to HLS and RTMP destinations - start, stop, list,
+    and retrieve broadcasts, change broadcast layout, and select streams to include.
+- aid: vonage-video:vonage-video-sip-render-api
+  name: Vonage Video SIP & Render API
+  tags:
+  - SIP
+  - Experience Composer
+  - Render
+  - Captions
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.vonage.com/en/video/guides/sip
+  baseURL: https://video.api.vonage.com/v2
+  properties:
+  - url: https://developer.vonage.com/en/video/guides/sip
+    type: Documentation
+  - url: https://developer.vonage.com/en/api/video
+    type: APIReference
+  - url: openapi/vonage-video-openapi.yml
+    type: OpenAPI
+  - url: collections/vonage-video.postman_collection.json
+    type: Postman
+  description: Dial PSTN/SIP endpoints into a session, play DTMF tones, start and stop
+    live captions, and run the Experience Composer render service for custom layouts.
+- aid: vonage-video:vonage-video-webhooks-api
+  name: Vonage Video Webhooks API
+  tags:
+  - Webhooks
+  - Callbacks
+  - Session Monitoring
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.vonage.com/en/video/guides/session-monitoring
+  baseURL: https://video.api.vonage.com/v2
+  properties:
+  - url: https://developer.vonage.com/en/video/guides/session-monitoring
+    type: Documentation
+  - url: https://developer.vonage.com/en/video/guides/secure-callbacks
+    type: Documentation
+  - url: openapi/vonage-video-openapi.yml
+    type: OpenAPI
+  description: Session monitoring, archive, broadcast, SIP, captions, and render callback
+    events delivered to a registered URL, with secure (signed) callback verification.
+common:
+- type: GitHubOrganization
+  url: https://github.com/Vonage
+- type: LinkedIn
+  url: https://www.linkedin.com/company/vonage
+- type: Website
+  url: https://www.vonage.com/communications-apis/video/
+- type: Documentation
+  url: https://developer.vonage.com/en/video/overview
+- type: Plans
+  url: plans/vonage-video-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/vonage-video-rate-limits.yml
+- type: FinOps
+  url: finops/vonage-video-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,331 @@
+{
+  "info": {
+    "name": "Vonage Video API",
+    "description": "REST API for the Vonage Video platform (formerly OpenTok / TokBox): sessions, streams and signaling, archives (recording), broadcasts (live streaming), SIP, captions, and the Experience Composer render service. Authenticated with a JWT Bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://video.api.vonage.com/v2"
+    },
+    {
+      "key": "applicationId",
+      "value": ""
+    },
+    {
+      "key": "bearerToken",
+      "value": ""
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Sessions",
+      "item": [
+        {
+          "name": "Create session",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "url": {
+              "raw": "https://video.api.vonage.com/session/create",
+              "protocol": "https",
+              "host": ["video", "api", "vonage", "com"],
+              "path": ["session", "create"]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "archiveMode", "value": "manual" },
+                { "key": "p2p.preference", "value": "disabled" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List connections",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/connection",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "connection"]
+            }
+          }
+        },
+        {
+          "name": "Force disconnect",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/connection/:connectionId",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "connection", ":connectionId"]
+            }
+          }
+        },
+        {
+          "name": "Migrate session",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/migrate",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "migrate"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Streams & Signaling",
+      "item": [
+        {
+          "name": "List streams",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/stream",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "stream"]
+            }
+          }
+        },
+        {
+          "name": "Get stream",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/stream/:streamId",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "stream", ":streamId"]
+            }
+          }
+        },
+        {
+          "name": "Signal session",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/signal",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "signal"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"chat\",\n  \"data\": \"hello\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Mute session",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/mute",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "mute"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": true,\n  \"excludedStreamIds\": []\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Archives",
+      "item": [
+        {
+          "name": "List archives",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/archive",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "archive"]
+            }
+          }
+        },
+        {
+          "name": "Start archive",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/archive",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "archive"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"<string>\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"outputMode\": \"composed\",\n  \"resolution\": \"1280x720\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Stop archive",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/archive/:archiveId/stop",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "archive", ":archiveId", "stop"]
+            }
+          }
+        },
+        {
+          "name": "Get archive",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/archive/:archiveId",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "archive", ":archiveId"]
+            }
+          }
+        },
+        {
+          "name": "Delete archive",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/archive/:archiveId",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "archive", ":archiveId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Broadcasts",
+      "item": [
+        {
+          "name": "List broadcasts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/broadcast",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "broadcast"]
+            }
+          }
+        },
+        {
+          "name": "Start broadcast",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/broadcast",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "broadcast"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"<string>\",\n  \"outputs\": {\n    \"hls\": { \"dvr\": false, \"lowLatency\": false }\n  },\n  \"resolution\": \"1280x720\",\n  \"maxDuration\": 7200\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Stop broadcast",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/broadcast/:broadcastId/stop",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "broadcast", ":broadcastId", "stop"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "SIP & Render",
+      "item": [
+        {
+          "name": "Dial SIP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/dial",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "dial"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"<string>\",\n  \"token\": \"<jwt>\",\n  \"sip\": { \"uri\": \"sip:user@sip.example.com\" }\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Play DTMF",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/session/:sessionId/play-dtmf",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "session", ":sessionId", "play-dtmf"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"digits\": \"1234#\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Start render",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/render",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "render"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"<string>\",\n  \"token\": \"<jwt>\",\n  \"url\": \"https://example.com/composer\",\n  \"resolution\": \"1280x720\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Stop render",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/project/{{applicationId}}/render/:renderId",
+              "host": ["{{baseUrl}}"],
+              "path": ["project", "{{applicationId}}", "render", ":renderId"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

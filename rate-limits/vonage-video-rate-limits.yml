@@ -1,0 +1,81 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Vonage Video API
+providerId: vonage-video
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Video
+- WebRTC
+- Live Streaming
+- Real-Time Communications
+- CPaaS
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  The Vonage Video REST API enforces per-application rate limits on
+  server-side operations (session creation, signaling, archiving, broadcast,
+  SIP, render, and moderation calls), plus platform concurrency limits on
+  simultaneous sessions, publishers per session, archives, and broadcasts.
+  Signaling has per-connection rate and payload-size limits enforced on the
+  client and server. Specific numeric limits vary by account tier and are not
+  published as a single table; they are not reconciled in this artifact.
+notes: >-
+  Verify per-application REST rate limits, signaling limits, and concurrency
+  caps with Vonage support and the developer documentation on reconciliation;
+  values change with account tier and Enterprise agreements.
+sources:
+- https://developer.vonage.com/en/video/overview
+- https://developer.vonage.com/en/video/guides/signaling
+- https://api.support.vonage.com/hc/en-us/sections/6646174769436-Video-API
+responseCodes:
+  throttled: 429
+limits:
+- name: REST API Requests
+  scope: application
+  metric: requests
+  limit: see provider documentation
+  notes: Server-side REST operations are rate limited per application; exceeding returns 429.
+- name: Signaling Rate
+  scope: connection
+  metric: signals
+  limit: see provider documentation
+  notes: Per-connection signal rate limit; excess signals are dropped or rejected.
+- name: Signal Payload Size
+  scope: request
+  metric: bytes
+  limit: 8192
+  notes: Signal data payload is limited to roughly 8 KB per signal.
+- name: Publishers Per Session
+  scope: session
+  metric: publishers
+  limit: see provider documentation
+  notes: Concurrent active publishers per routed session; affects participant-minute pricing tier.
+- name: Concurrent Sessions
+  scope: application
+  metric: sessions
+  limit: see provider documentation
+  notes: Concurrent live sessions per application, varies by account tier.
+- name: Concurrent Archives
+  scope: application
+  metric: archives
+  limit: see provider documentation
+  notes: Concurrent recording archives per application.
+- name: Concurrent Broadcasts
+  scope: application
+  metric: broadcasts
+  limit: see provider documentation
+  notes: Concurrent live streaming broadcasts per application.
+policies:
+- name: Tiered Limits
+  description: Concurrency and rate limits raise as accounts move from trial to paid and Enterprise agreements.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on 429 responses and honor Retry-After.
+- name: Callback Retry
+  description: Secure callback delivery is retried with backoff for up to 24 hours before the event is dropped.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

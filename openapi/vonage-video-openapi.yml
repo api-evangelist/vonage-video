@@ -1,0 +1,1123 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video API
+  description: >-
+    REST API for the Vonage Video platform (formerly OpenTok / TokBox). The
+    Vonage Video Cloud creates and manages real-time video sessions and provides
+    advanced server-side features including archiving (recording), live streaming
+    broadcasts, signaling, moderation, SIP interconnect, live captions, and the
+    Experience Composer render service. Requests are authenticated with a
+    JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+  - url: https://video.api.vonage.com/v2
+    description: Vonage Video Cloud REST API
+security:
+  - bearerAuth: []
+tags:
+  - name: Sessions
+    description: Create sessions and manage connections.
+  - name: Streams
+    description: Inspect streams and change stream layout classes.
+  - name: Signaling
+    description: Send server-side signals into a session.
+  - name: Moderation
+    description: Force-disconnect and mute participants.
+  - name: Archives
+    description: Record sessions as composed or individual-stream archives.
+  - name: Broadcasts
+    description: Live stream sessions to HLS and RTMP destinations.
+  - name: SIP
+    description: Dial SIP/PSTN endpoints into a session and play DTMF.
+  - name: Captions
+    description: Start and stop real-time live captions.
+  - name: Render
+    description: Experience Composer render service.
+paths:
+  /session/create:
+    post:
+      operationId: createSession
+      tags:
+        - Sessions
+      summary: Create a session
+      description: >-
+        Creates a new Vonage Video session and returns its session ID. The
+        session ID is then used by clients and by other REST operations.
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+      responses:
+        '200':
+          description: Session created.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/connection:
+    get:
+      operationId: listConnections
+      tags:
+        - Sessions
+      summary: List active connections in a session
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: A list of active connections.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/connection/{connectionId}:
+    delete:
+      operationId: forceDisconnect
+      tags:
+        - Moderation
+      summary: Force a client to disconnect
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+        - $ref: '#/components/parameters/ConnectionId'
+      responses:
+        '204':
+          description: The connection was disconnected.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /project/{applicationId}/session/{sessionId}/migrate:
+    post:
+      operationId: migrateSession
+      tags:
+        - Sessions
+      summary: Migrate a session to a different media region
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: Migration initiated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/stream:
+    get:
+      operationId: listStreams
+      tags:
+        - Streams
+      summary: Get information on all streams in a session
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: A list of streams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamList'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    put:
+      operationId: setStreamClassLists
+      tags:
+        - Streams
+      summary: Change stream layout classes
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetStreamClassRequest'
+      responses:
+        '200':
+          description: Stream layout classes updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/stream/{streamId}:
+    get:
+      operationId: getStream
+      tags:
+        - Streams
+      summary: Get information on a single stream
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+        - $ref: '#/components/parameters/StreamId'
+      responses:
+        '200':
+          description: Stream information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stream'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /project/{applicationId}/session/{sessionId}/mute:
+    post:
+      operationId: muteSession
+      tags:
+        - Moderation
+      summary: Mute all streams in a session
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MuteSessionRequest'
+      responses:
+        '200':
+          description: Streams muted.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/stream/{streamId}/mute:
+    post:
+      operationId: muteStream
+      tags:
+        - Moderation
+      summary: Mute a single stream
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+        - $ref: '#/components/parameters/StreamId'
+      responses:
+        '200':
+          description: Stream muted.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/signal:
+    post:
+      operationId: signalSession
+      tags:
+        - Signaling
+      summary: Send a signal to all connections in a session
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignalRequest'
+      responses:
+        '204':
+          description: Signal sent.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/connection/{connectionId}/signal:
+    post:
+      operationId: signalConnection
+      tags:
+        - Signaling
+      summary: Send a signal to a single connection
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+        - $ref: '#/components/parameters/ConnectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignalRequest'
+      responses:
+        '204':
+          description: Signal sent.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/archive:
+    get:
+      operationId: listArchives
+      tags:
+        - Archives
+      summary: List archives for a project
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: count
+          in: query
+          schema:
+            type: integer
+        - name: sessionId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of archives.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchiveList'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: startArchive
+      tags:
+        - Archives
+      summary: Start an archive (recording)
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartArchiveRequest'
+      responses:
+        '200':
+          description: Archive started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Archive'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Conflict - the session is already being archived or has no clients.
+  /project/{applicationId}/archive/{archiveId}:
+    get:
+      operationId: getArchive
+      tags:
+        - Archives
+      summary: Get an archive
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/ArchiveId'
+      responses:
+        '200':
+          description: Archive information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Archive'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteArchive
+      tags:
+        - Archives
+      summary: Delete an archive
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/ArchiveId'
+      responses:
+        '204':
+          description: Archive deleted.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Conflict - status must be uploaded, available, or deleted.
+  /project/{applicationId}/archive/{archiveId}/stop:
+    post:
+      operationId: stopArchive
+      tags:
+        - Archives
+      summary: Stop an archive
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/ArchiveId'
+      responses:
+        '200':
+          description: Archive stopped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Archive'
+        '409':
+          description: Conflict - the archive is not currently recording.
+  /project/{applicationId}/archive/{archiveId}/layout:
+    put:
+      operationId: setArchiveLayout
+      tags:
+        - Archives
+      summary: Change the layout of a composed archive
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/ArchiveId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Layout'
+      responses:
+        '200':
+          description: Layout updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/archive/{archiveId}/streams:
+    patch:
+      operationId: selectArchiveStreams
+      tags:
+        - Archives
+      summary: Add or remove streams from a composed archive
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/ArchiveId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamSelectionRequest'
+      responses:
+        '204':
+          description: Streams updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/broadcast:
+    get:
+      operationId: listBroadcasts
+      tags:
+        - Broadcasts
+      summary: List broadcasts for a project
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: count
+          in: query
+          schema:
+            type: integer
+        - name: sessionId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of broadcasts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BroadcastList'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: startBroadcast
+      tags:
+        - Broadcasts
+      summary: Start a live streaming broadcast
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartBroadcastRequest'
+      responses:
+        '200':
+          description: Broadcast started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '409':
+          description: Conflict - the session is already being broadcast.
+  /project/{applicationId}/broadcast/{broadcastId}:
+    get:
+      operationId: getBroadcast
+      tags:
+        - Broadcasts
+      summary: Get a broadcast
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/BroadcastId'
+      responses:
+        '200':
+          description: Broadcast information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /project/{applicationId}/broadcast/{broadcastId}/stop:
+    post:
+      operationId: stopBroadcast
+      tags:
+        - Broadcasts
+      summary: Stop a broadcast
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/BroadcastId'
+      responses:
+        '200':
+          description: Broadcast stopped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+  /project/{applicationId}/broadcast/{broadcastId}/layout:
+    put:
+      operationId: setBroadcastLayout
+      tags:
+        - Broadcasts
+      summary: Change the layout of a broadcast
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/BroadcastId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Layout'
+      responses:
+        '200':
+          description: Layout updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/broadcast/{broadcastId}/streams:
+    patch:
+      operationId: selectBroadcastStreams
+      tags:
+        - Broadcasts
+      summary: Add or remove streams from a broadcast
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/BroadcastId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamSelectionRequest'
+      responses:
+        '204':
+          description: Streams updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/dial:
+    post:
+      operationId: dial
+      tags:
+        - SIP
+      summary: Dial a SIP endpoint into a session
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DialRequest'
+      responses:
+        '200':
+          description: SIP call connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SipCall'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Conflict - the SIP call could not be started.
+  /project/{applicationId}/session/{sessionId}/play-dtmf:
+    post:
+      operationId: playDtmfAll
+      tags:
+        - SIP
+      summary: Play DTMF tones to all connections in a session
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DtmfRequest'
+      responses:
+        '200':
+          description: DTMF tones played.
+        '400':
+          description: Invalid DTMF digits.
+  /project/{applicationId}/session/{sessionId}/connection/{connectionId}/play-dtmf:
+    post:
+      operationId: playDtmfConnection
+      tags:
+        - SIP
+      summary: Play DTMF tones to a single connection
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - $ref: '#/components/parameters/SessionId'
+        - $ref: '#/components/parameters/ConnectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DtmfRequest'
+      responses:
+        '200':
+          description: DTMF tones played.
+  /project/{applicationId}/captions/{captionsId}/start:
+    post:
+      operationId: startCaptions
+      tags:
+        - Captions
+      summary: Start live captions
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: captionsId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartCaptionsRequest'
+      responses:
+        '202':
+          description: Captions started.
+  /project/{applicationId}/captions/{captionsId}/stop:
+    post:
+      operationId: stopCaptions
+      tags:
+        - Captions
+      summary: Stop live captions
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: captionsId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Captions stopped.
+  /project/{applicationId}/render:
+    get:
+      operationId: listRenders
+      tags:
+        - Render
+      summary: List Experience Composer renders
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: count
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of renders.
+    post:
+      operationId: startRender
+      tags:
+        - Render
+      summary: Start an Experience Composer render
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartRenderRequest'
+      responses:
+        '202':
+          description: Render started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+  /project/{applicationId}/render/{renderId}:
+    get:
+      operationId: getRender
+      tags:
+        - Render
+      summary: Get an Experience Composer render
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: renderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Render information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: stopRender
+      tags:
+        - Render
+      summary: Stop an Experience Composer render
+      parameters:
+        - $ref: '#/components/parameters/ApplicationId'
+        - name: renderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Render stopped.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        A JWT generated from your Vonage application's private key and
+        application ID, sent in the Authorization header.
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ConnectionId:
+      name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+    StreamId:
+      name: streamId
+      in: path
+      required: true
+      schema:
+        type: string
+    ArchiveId:
+      name: archiveId
+      in: path
+      required: true
+      schema:
+        type: string
+    BroadcastId:
+      name: broadcastId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+    NotFound:
+      description: The requested resource was not found.
+  schemas:
+    CreateSessionRequest:
+      type: object
+      properties:
+        archiveMode:
+          type: string
+          enum: [manual, always]
+          default: manual
+        location:
+          type: string
+          description: IP address used to choose the session media region.
+        p2p.preference:
+          type: string
+          enum: [enabled, disabled]
+          description: Whether the session uses relayed (routed) or peer-to-peer media.
+        e2ee:
+          type: boolean
+          description: Enable end-to-end encryption for the session.
+    Session:
+      type: object
+      properties:
+        session_id:
+          type: string
+        application_id:
+          type: string
+        create_dt:
+          type: string
+        media_server_url:
+          type: string
+    Stream:
+      type: object
+      properties:
+        id:
+          type: string
+        videoType:
+          type: string
+          enum: [camera, screen, custom]
+        name:
+          type: string
+        layoutClassList:
+          type: array
+          items:
+            type: string
+    StreamList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stream'
+    SetStreamClassRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              layoutClassList:
+                type: array
+                items:
+                  type: string
+    SignalRequest:
+      type: object
+      required:
+        - type
+        - data
+      properties:
+        type:
+          type: string
+          description: A string identifying the type of signal.
+        data:
+          type: string
+          description: The payload of the signal.
+    MuteSessionRequest:
+      type: object
+      required:
+        - active
+      properties:
+        active:
+          type: boolean
+        excludedStreamIds:
+          type: array
+          items:
+            type: string
+    StartArchiveRequest:
+      type: object
+      required:
+        - sessionId
+      properties:
+        sessionId:
+          type: string
+        hasAudio:
+          type: boolean
+          default: true
+        hasVideo:
+          type: boolean
+          default: true
+        name:
+          type: string
+        outputMode:
+          type: string
+          enum: [composed, individual]
+          default: composed
+        resolution:
+          type: string
+          enum: ['640x480', '1280x720', '1920x1080']
+        streamMode:
+          type: string
+          enum: [auto, manual]
+        layout:
+          $ref: '#/components/schemas/Layout'
+        multiArchiveTag:
+          type: string
+    Archive:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [started, stopped, uploaded, available, failed, deleted, expired, paused]
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+        size:
+          type: integer
+        outputMode:
+          type: string
+        resolution:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
+        url:
+          type: string
+          nullable: true
+    ArchiveList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Archive'
+    StartBroadcastRequest:
+      type: object
+      required:
+        - sessionId
+        - outputs
+      properties:
+        sessionId:
+          type: string
+        outputs:
+          type: object
+          properties:
+            hls:
+              type: object
+              properties:
+                dvr:
+                  type: boolean
+                lowLatency:
+                  type: boolean
+            rtmp:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  serverUrl:
+                    type: string
+                  streamName:
+                    type: string
+        maxDuration:
+          type: integer
+          default: 7200
+        maxBitrate:
+          type: integer
+        resolution:
+          type: string
+          enum: ['640x480', '1280x720', '1920x1080']
+        streamMode:
+          type: string
+          enum: [auto, manual]
+        layout:
+          $ref: '#/components/schemas/Layout'
+        multiBroadcastTag:
+          type: string
+    Broadcast:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum: [started, stopped]
+        createdAt:
+          type: integer
+          format: int64
+        maxDuration:
+          type: integer
+        resolution:
+          type: string
+        broadcastUrls:
+          type: object
+          properties:
+            hls:
+              type: string
+            rtmp:
+              type: array
+              items:
+                type: object
+    BroadcastList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
+    Layout:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [bestFit, pip, verticalPresentation, horizontalPresentation, focus, custom]
+        stylesheet:
+          type: string
+        screenshareType:
+          type: string
+    DialRequest:
+      type: object
+      required:
+        - sessionId
+        - token
+        - sip
+      properties:
+        sessionId:
+          type: string
+        token:
+          type: string
+        sip:
+          type: object
+          required:
+            - uri
+          properties:
+            uri:
+              type: string
+            from:
+              type: string
+            headers:
+              type: object
+            auth:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+            secure:
+              type: boolean
+            video:
+              type: boolean
+            observeForceMute:
+              type: boolean
+    SipCall:
+      type: object
+      properties:
+        id:
+          type: string
+        connectionId:
+          type: string
+        streamId:
+          type: string
+    DtmfRequest:
+      type: object
+      required:
+        - digits
+      properties:
+        digits:
+          type: string
+          description: The DTMF digits (0-9, *, #, p for 500ms pause).
+    StartCaptionsRequest:
+      type: object
+      required:
+        - sessionId
+        - token
+      properties:
+        sessionId:
+          type: string
+        token:
+          type: string
+        languageCode:
+          type: string
+          default: en-US
+        maxDuration:
+          type: integer
+          default: 14400
+        partialCaptions:
+          type: boolean
+        statusCallbackUrl:
+          type: string
+    Render:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum: [starting, started, stopped, failed]
+        streamId:
+          type: string
+        url:
+          type: string
+        resolution:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+    StartRenderRequest:
+      type: object
+      required:
+        - sessionId
+        - token
+        - url
+      properties:
+        sessionId:
+          type: string
+        token:
+          type: string
+        url:
+          type: string
+          description: A publicly reachable URL controlled by the customer.
+        maxDuration:
+          type: integer
+          default: 7200
+        resolution:
+          type: string
+          enum: ['640x480', '1280x720', '1280x800', '1920x1080']
+        properties:
+          type: object
+          properties:
+            name:
+              type: string

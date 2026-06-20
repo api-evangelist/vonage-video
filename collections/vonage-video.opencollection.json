@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create session", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/session/create",
+            "body": { "type": "form", "data": "archiveMode=manual&p2p.preference=disabled" }
+          },
+          "docs": "Create a new Vonage Video session and return its session ID."
+        },
+        {
+          "info": { "name": "List connections", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/connection"
+          },
+          "docs": "List active connections in a session."
+        },
+        {
+          "info": { "name": "Force disconnect", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/connection/{connectionId}"
+          },
+          "docs": "Force a client to disconnect from a session."
+        },
+        {
+          "info": { "name": "Migrate session", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/migrate"
+          },
+          "docs": "Migrate an active session to a different media region."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Streams & Signaling",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List streams", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/stream"
+          },
+          "docs": "Get information on all streams in a session."
+        },
+        {
+          "info": { "name": "Get stream", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/stream/{streamId}"
+          },
+          "docs": "Get information on a single stream."
+        },
+        {
+          "info": { "name": "Signal session", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/signal",
+            "body": { "type": "json", "data": "{\"type\":\"chat\",\"data\":\"hello\"}" }
+          },
+          "docs": "Send a signal to all connections in a session."
+        },
+        {
+          "info": { "name": "Mute session", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/mute",
+            "body": { "type": "json", "data": "{\"active\":true,\"excludedStreamIds\":[]}" }
+          },
+          "docs": "Mute all streams in a session."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Archives",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List archives", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/archive"
+          },
+          "docs": "List archives for a project."
+        },
+        {
+          "info": { "name": "Start archive", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/archive",
+            "body": { "type": "json", "data": "{\"sessionId\":\"<string>\",\"hasAudio\":true,\"hasVideo\":true,\"outputMode\":\"composed\",\"resolution\":\"1280x720\"}" }
+          },
+          "docs": "Start recording a session as a composed or individual-stream archive."
+        },
+        {
+          "info": { "name": "Stop archive", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/archive/{archiveId}/stop"
+          },
+          "docs": "Stop a recording archive."
+        },
+        {
+          "info": { "name": "Get archive", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/archive/{archiveId}"
+          },
+          "docs": "Get information on an archive."
+        },
+        {
+          "info": { "name": "Delete archive", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/archive/{archiveId}"
+          },
+          "docs": "Delete an archive."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Broadcasts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List broadcasts", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/broadcast"
+          },
+          "docs": "List broadcasts for a project."
+        },
+        {
+          "info": { "name": "Start broadcast", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/broadcast",
+            "body": { "type": "json", "data": "{\"sessionId\":\"<string>\",\"outputs\":{\"hls\":{\"dvr\":false,\"lowLatency\":false}},\"resolution\":\"1280x720\",\"maxDuration\":7200}" }
+          },
+          "docs": "Start a live streaming broadcast to HLS and/or RTMP destinations."
+        },
+        {
+          "info": { "name": "Stop broadcast", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/broadcast/{broadcastId}/stop"
+          },
+          "docs": "Stop a live streaming broadcast."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SIP & Render",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Dial SIP", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/dial",
+            "body": { "type": "json", "data": "{\"sessionId\":\"<string>\",\"token\":\"<jwt>\",\"sip\":{\"uri\":\"sip:user@sip.example.com\"}}" }
+          },
+          "docs": "Dial a SIP/PSTN endpoint into a session."
+        },
+        {
+          "info": { "name": "Play DTMF", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/session/{sessionId}/play-dtmf",
+            "body": { "type": "json", "data": "{\"digits\":\"1234#\"}" }
+          },
+          "docs": "Play DTMF tones to all connections in a session."
+        },
+        {
+          "info": { "name": "Start render", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/render",
+            "body": { "type": "json", "data": "{\"sessionId\":\"<string>\",\"token\":\"<jwt>\",\"url\":\"https://example.com/composer\",\"resolution\":\"1280x720\"}" }
+          },
+          "docs": "Start an Experience Composer render."
+        },
+        {
+          "info": { "name": "Stop render", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://video.api.vonage.com/v2/project/{{applicationId}}/render/{renderId}"
+          },
+          "docs": "Stop an Experience Composer render."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Vonage Video API
+providerId: vonage-video
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Video
+- WebRTC
+- Live Streaming
+- Real-Time Communications
+- CPaaS
+- Plans
+description: >-
+  Vonage Video API uses usage-based, per-minute pricing. Core real-time video
+  is billed per participant-minute, with separate per-minute meters for
+  archiving (recording), live streaming broadcasts (creation and HLS viewing),
+  the Experience Composer render service, Audio Connector, SIP interconnect,
+  and live captions. New accounts start with a free trial credit; volume and
+  Enterprise pricing is negotiated with Vonage. Representative published rates
+  are listed below; exact amounts vary by region and contract and are not fully
+  reconciled in this artifact.
+notes: >-
+  Rates below are representative of Vonage's published Video API pricing page
+  and should be reconciled against the live pricing page; some meters (SIP
+  interconnect, Audio Connector, live captions, Experience Composer) are not
+  fully published and are marked unknown.
+sources:
+- https://www.vonage.com/communications-apis/video/pricing/
+- https://api.support.vonage.com/hc/en-us/sections/6646174769436-Video-API
+- https://developer.vonage.com/en/video/overview
+plans:
+- id: vonage-video-pay-as-you-go
+  name: Pay-as-you-go
+  type: usage
+  description: >-
+    Per-minute metered usage across video sessions, archiving, broadcasts,
+    and advanced services with no monthly minimum.
+  entries:
+  - label: Participant Minutes
+    name: participant_minutes
+    type: usage
+    metric: participant_minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0041 per participant per minute (sessions up to 25 active publishers)
+    userMultiplied: true
+  - label: Individual Stream Archiving
+    name: archive_individual
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0125 per recorded minute
+    userMultiplied: false
+  - label: Composed Archiving (SD)
+    name: archive_composed_sd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.025 per recorded minute
+    userMultiplied: false
+  - label: Composed Archiving (HD)
+    name: archive_composed_hd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.035 per recorded minute
+    userMultiplied: false
+  - label: Composed Archiving (FHD)
+    name: archive_composed_fhd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.045 per recorded minute
+    userMultiplied: false
+  - label: Broadcast Creation (SD)
+    name: broadcast_sd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.07 per minute of content created (HLS-only, RTMP-only, or HLS+RTMP)
+    userMultiplied: false
+  - label: Broadcast Creation (HD)
+    name: broadcast_hd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.10 per minute of content created
+    userMultiplied: false
+  - label: Broadcast Creation (FHD)
+    name: broadcast_fhd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.125 per minute of content created
+    userMultiplied: false
+  - label: HLS Viewer Minutes (up to HD)
+    name: hls_viewer_hd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.0015 per minute viewed per HLS viewer
+    userMultiplied: true
+  - label: HLS Viewer Minutes (up to FHD)
+    name: hls_viewer_fhd
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.003 per minute viewed per HLS viewer
+    userMultiplied: true
+  - label: Experience Composer (Render)
+    name: experience_composer
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-minute, see provider pricing page (unknown)
+    userMultiplied: false
+  - label: Audio Connector
+    name: audio_connector
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-minute, see provider pricing page (unknown)
+    userMultiplied: false
+  - label: SIP Interconnect
+    name: sip_interconnect
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-minute plus PSTN termination, see provider pricing page (unknown)
+    userMultiplied: false
+  - label: Live Captions
+    name: live_captions
+    type: usage
+    metric: minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: per-minute, see provider pricing page (unknown)
+    userMultiplied: false
+  elements:
+  - name: Sessions
+  - name: Archives
+  - name: Broadcasts
+  - name: SIP
+  - name: Experience Composer
+  - name: Live Captions
+- id: vonage-video-volume-discount
+  name: Volume Discount
+  type: usage
+  description: >-
+    Automatic monthly volume discount on participant minutes above a
+    threshold; additional discounts negotiated for higher volumes.
+  entries:
+  - label: Participant Minute Volume Discount
+    name: volume_discount
+    type: usage
+    metric: participant_minutes
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5% automatic discount on additional participant minutes above 100,000/month
+    userMultiplied: false
+  elements:
+  - name: Participant Minutes
+- id: vonage-video-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Volume commitments, custom regional/media options, dedicated support,
+    HIPAA/compliance options, and negotiated rates. Contact Vonage sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated Support
+  - name: Compliance Options
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

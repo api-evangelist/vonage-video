@@ -1,0 +1,124 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Vonage Video API
+providerId: vonage-video
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Video
+- WebRTC
+- Live Streaming
+- Real-Time Communications
+- CPaaS
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Vonage Video API spend. Vonage bills usage on a
+  per-stream-minute (participant-minute) model for real-time video, with
+  separate per-minute meters for archiving (recording), broadcast creation,
+  HLS viewer minutes, the Experience Composer render service, Audio Connector,
+  SIP interconnect, and live captions. Resolution (SD/HD/FHD) drives the per
+  minute rate for archives and broadcasts. An automatic monthly volume discount
+  applies to participant minutes above a threshold.
+notes: >-
+  Per-minute rates differ by resolution, region, and contract and are subject
+  to change; verify against the Vonage Video API pricing page during
+  reconciliation. Some advanced-service meters are not fully published.
+sources:
+- https://www.vonage.com/communications-apis/video/pricing/
+- https://developer.vonage.com/en/video/overview
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Vonage
+serviceCategory: Communications and Media
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Vonage Video API
+  ServiceCategory: Communications and Media
+  ProviderName: Vonage
+  PublisherName: Vonage
+  InvoiceIssuerName: Vonage
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: participant_minutes
+  description: Real-time video participant-minutes (per publisher/subscriber per minute), billed per minute.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+  - session
+- name: archive_minutes
+  description: Recorded archive minutes, billed per minute by output mode and resolution (SD/HD/FHD).
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+  - resolution
+  - outputMode
+- name: broadcast_minutes
+  description: Live streaming broadcast minutes created, billed per minute by resolution (SD/HD/FHD).
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+  - resolution
+- name: hls_viewer_minutes
+  description: HLS content minutes viewed per viewer, billed per minute by resolution.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+  - resolution
+- name: render_minutes
+  description: Experience Composer render service minutes, billed per minute.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+- name: audio_connector_minutes
+  description: Audio Connector (WebSocket audio) minutes, billed per minute.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+- name: sip_minutes
+  description: SIP interconnect minutes plus PSTN termination, billed per minute.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+- name: captions_minutes
+  description: Live caption minutes, billed per minute.
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - application
+principles:
+- name: Visibility
+  description: Pull Vonage usage and the Video API Reports API; inspect per-minute burn by session, resolution, and service.
+- name: Allocation
+  description: Tag applications and sessions per workload/team; map participant-minutes to internal cost centers.
+- name: Optimization
+  description: Record at the lowest acceptable resolution, prefer individual over composed archives where viable, cap broadcast maxDuration, and limit publishers per session to stay in the lower participant-minute tier.
+- name: Accountability
+  description: Assign owners per application/key; review monthly per-minute spend against budget and the volume-discount threshold.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
