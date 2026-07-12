@@ -139,6 +139,10 @@ apis:
   description: Session monitoring, archive, broadcast, SIP, captions, and render callback
     events delivered to a registered URL, with secure (signed) callback verification.
 common:
+- type: DomainSecurity
+  url: security/vonage-video-domain-security.yml
+- type: Authentication
+  url: authentication/vonage-video-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/Vonage
 - type: LinkedIn
