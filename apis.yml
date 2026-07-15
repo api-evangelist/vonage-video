@@ -139,6 +139,8 @@ apis:
   description: Session monitoring, archive, broadcast, SIP, captions, and render callback
     events delivered to a registered URL, with secure (signed) callback verification.
 common:
+- type: AgenticAccess
+  url: agentic-access/vonage-video-agentic-access.yml
 - type: DomainSecurity
   url: security/vonage-video-domain-security.yml
 - type: Authentication
