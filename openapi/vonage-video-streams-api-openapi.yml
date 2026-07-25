@@ -1,0 +1,149 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives Streams API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: Streams
+  description: Inspect streams and change stream layout classes.
+paths:
+  /project/{applicationId}/session/{sessionId}/stream:
+    get:
+      operationId: listStreams
+      tags:
+      - Streams
+      summary: Get information on all streams in a session
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: A list of streams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamList'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    put:
+      operationId: setStreamClassLists
+      tags:
+      - Streams
+      summary: Change stream layout classes
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetStreamClassRequest'
+      responses:
+        '200':
+          description: Stream layout classes updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/stream/{streamId}:
+    get:
+      operationId: getStream
+      tags:
+      - Streams
+      summary: Get information on a single stream
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      - $ref: '#/components/parameters/StreamId'
+      responses:
+        '200':
+          description: Stream information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stream'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    StreamList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stream'
+    Stream:
+      type: object
+      properties:
+        id:
+          type: string
+        videoType:
+          type: string
+          enum:
+          - camera
+          - screen
+          - custom
+        name:
+          type: string
+        layoutClassList:
+          type: array
+          items:
+            type: string
+    SetStreamClassRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              layoutClassList:
+                type: array
+                items:
+                  type: string
+  parameters:
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    StreamId:
+      name: streamId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.

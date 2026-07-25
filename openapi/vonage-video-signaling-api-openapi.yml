@@ -1,0 +1,102 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives Signaling API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: Signaling
+  description: Send server-side signals into a session.
+paths:
+  /project/{applicationId}/session/{sessionId}/signal:
+    post:
+      operationId: signalSession
+      tags:
+      - Signaling
+      summary: Send a signal to all connections in a session
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignalRequest'
+      responses:
+        '204':
+          description: Signal sent.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/connection/{connectionId}/signal:
+    post:
+      operationId: signalConnection
+      tags:
+      - Signaling
+      summary: Send a signal to a single connection
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      - $ref: '#/components/parameters/ConnectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignalRequest'
+      responses:
+        '204':
+          description: Signal sent.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  parameters:
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    ConnectionId:
+      name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    SignalRequest:
+      type: object
+      required:
+      - type
+      - data
+      properties:
+        type:
+          type: string
+          description: A string identifying the type of signal.
+        data:
+          type: string
+          description: The payload of the signal.
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.

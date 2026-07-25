@@ -1,0 +1,167 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives Render API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: Render
+  description: Experience Composer render service.
+paths:
+  /project/{applicationId}/render:
+    get:
+      operationId: listRenders
+      tags:
+      - Render
+      summary: List Experience Composer renders
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: count
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of renders.
+    post:
+      operationId: startRender
+      tags:
+      - Render
+      summary: Start an Experience Composer render
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartRenderRequest'
+      responses:
+        '202':
+          description: Render started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+  /project/{applicationId}/render/{renderId}:
+    get:
+      operationId: getRender
+      tags:
+      - Render
+      summary: Get an Experience Composer render
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - name: renderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Render information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: stopRender
+      tags:
+      - Render
+      summary: Stop an Experience Composer render
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - name: renderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Render stopped.
+components:
+  schemas:
+    StartRenderRequest:
+      type: object
+      required:
+      - sessionId
+      - token
+      - url
+      properties:
+        sessionId:
+          type: string
+        token:
+          type: string
+        url:
+          type: string
+          description: A publicly reachable URL controlled by the customer.
+        maxDuration:
+          type: integer
+          default: 7200
+        resolution:
+          type: string
+          enum:
+          - 640x480
+          - 1280x720
+          - 1280x800
+          - 1920x1080
+        properties:
+          type: object
+          properties:
+            name:
+              type: string
+    Render:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - starting
+          - started
+          - stopped
+          - failed
+        streamId:
+          type: string
+        url:
+          type: string
+        resolution:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.

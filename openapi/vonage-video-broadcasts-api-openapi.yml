@@ -1,0 +1,285 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives Broadcasts API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: Broadcasts
+  description: Live stream sessions to HLS and RTMP destinations.
+paths:
+  /project/{applicationId}/broadcast:
+    get:
+      operationId: listBroadcasts
+      tags:
+      - Broadcasts
+      summary: List broadcasts for a project
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: count
+        in: query
+        schema:
+          type: integer
+      - name: sessionId
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of broadcasts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BroadcastList'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: startBroadcast
+      tags:
+      - Broadcasts
+      summary: Start a live streaming broadcast
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartBroadcastRequest'
+      responses:
+        '200':
+          description: Broadcast started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '409':
+          description: Conflict - the session is already being broadcast.
+  /project/{applicationId}/broadcast/{broadcastId}:
+    get:
+      operationId: getBroadcast
+      tags:
+      - Broadcasts
+      summary: Get a broadcast
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/BroadcastId'
+      responses:
+        '200':
+          description: Broadcast information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /project/{applicationId}/broadcast/{broadcastId}/stop:
+    post:
+      operationId: stopBroadcast
+      tags:
+      - Broadcasts
+      summary: Stop a broadcast
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/BroadcastId'
+      responses:
+        '200':
+          description: Broadcast stopped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+  /project/{applicationId}/broadcast/{broadcastId}/layout:
+    put:
+      operationId: setBroadcastLayout
+      tags:
+      - Broadcasts
+      summary: Change the layout of a broadcast
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/BroadcastId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Layout'
+      responses:
+        '200':
+          description: Layout updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/broadcast/{broadcastId}/streams:
+    patch:
+      operationId: selectBroadcastStreams
+      tags:
+      - Broadcasts
+      summary: Add or remove streams from a broadcast
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/BroadcastId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamSelectionRequest'
+      responses:
+        '204':
+          description: Streams updated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  schemas:
+    StartBroadcastRequest:
+      type: object
+      required:
+      - sessionId
+      - outputs
+      properties:
+        sessionId:
+          type: string
+        outputs:
+          type: object
+          properties:
+            hls:
+              type: object
+              properties:
+                dvr:
+                  type: boolean
+                lowLatency:
+                  type: boolean
+            rtmp:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  serverUrl:
+                    type: string
+                  streamName:
+                    type: string
+        maxDuration:
+          type: integer
+          default: 7200
+        maxBitrate:
+          type: integer
+        resolution:
+          type: string
+          enum:
+          - 640x480
+          - 1280x720
+          - 1920x1080
+        streamMode:
+          type: string
+          enum:
+          - auto
+          - manual
+        layout:
+          $ref: '#/components/schemas/Layout'
+        multiBroadcastTag:
+          type: string
+    Layout:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bestFit
+          - pip
+          - verticalPresentation
+          - horizontalPresentation
+          - focus
+          - custom
+        stylesheet:
+          type: string
+        screenshareType:
+          type: string
+    Broadcast:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - started
+          - stopped
+        createdAt:
+          type: integer
+          format: int64
+        maxDuration:
+          type: integer
+        resolution:
+          type: string
+        broadcastUrls:
+          type: object
+          properties:
+            hls:
+              type: string
+            rtmp:
+              type: array
+              items:
+                type: object
+    BroadcastList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+    NotFound:
+      description: The requested resource was not found.
+  parameters:
+    BroadcastId:
+      name: broadcastId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.

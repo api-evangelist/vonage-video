@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives Moderation API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: Moderation
+  description: Force-disconnect and mute participants.
+paths:
+  /project/{applicationId}/session/{sessionId}/connection/{connectionId}:
+    delete:
+      operationId: forceDisconnect
+      tags:
+      - Moderation
+      summary: Force a client to disconnect
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      - $ref: '#/components/parameters/ConnectionId'
+      responses:
+        '204':
+          description: The connection was disconnected.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /project/{applicationId}/session/{sessionId}/mute:
+    post:
+      operationId: muteSession
+      tags:
+      - Moderation
+      summary: Mute all streams in a session
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MuteSessionRequest'
+      responses:
+        '200':
+          description: Streams muted.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/stream/{streamId}/mute:
+    post:
+      operationId: muteStream
+      tags:
+      - Moderation
+      summary: Mute a single stream
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      - $ref: '#/components/parameters/StreamId'
+      responses:
+        '200':
+          description: Stream muted.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  parameters:
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    StreamId:
+      name: streamId
+      in: path
+      required: true
+      schema:
+        type: string
+    ConnectionId:
+      name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+  schemas:
+    MuteSessionRequest:
+      type: object
+      required:
+      - active
+      properties:
+        active:
+          type: boolean
+        excludedStreamIds:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.

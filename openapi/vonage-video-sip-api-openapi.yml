@@ -1,0 +1,165 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives SIP API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: SIP
+  description: Dial SIP/PSTN endpoints into a session and play DTMF.
+paths:
+  /project/{applicationId}/dial:
+    post:
+      operationId: dial
+      tags:
+      - SIP
+      summary: Dial a SIP endpoint into a session
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DialRequest'
+      responses:
+        '200':
+          description: SIP call connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SipCall'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Conflict - the SIP call could not be started.
+  /project/{applicationId}/session/{sessionId}/play-dtmf:
+    post:
+      operationId: playDtmfAll
+      tags:
+      - SIP
+      summary: Play DTMF tones to all connections in a session
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DtmfRequest'
+      responses:
+        '200':
+          description: DTMF tones played.
+        '400':
+          description: Invalid DTMF digits.
+  /project/{applicationId}/session/{sessionId}/connection/{connectionId}/play-dtmf:
+    post:
+      operationId: playDtmfConnection
+      tags:
+      - SIP
+      summary: Play DTMF tones to a single connection
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      - $ref: '#/components/parameters/ConnectionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DtmfRequest'
+      responses:
+        '200':
+          description: DTMF tones played.
+components:
+  parameters:
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    ConnectionId:
+      name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    DtmfRequest:
+      type: object
+      required:
+      - digits
+      properties:
+        digits:
+          type: string
+          description: The DTMF digits (0-9, *,
+    SipCall:
+      type: object
+      properties:
+        id:
+          type: string
+        connectionId:
+          type: string
+        streamId:
+          type: string
+    DialRequest:
+      type: object
+      required:
+      - sessionId
+      - token
+      - sip
+      properties:
+        sessionId:
+          type: string
+        token:
+          type: string
+        sip:
+          type: object
+          required:
+          - uri
+          properties:
+            uri:
+              type: string
+            from:
+              type: string
+            headers:
+              type: object
+            auth:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+            secure:
+              type: boolean
+            video:
+              type: boolean
+            observeForceMute:
+              type: boolean
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.

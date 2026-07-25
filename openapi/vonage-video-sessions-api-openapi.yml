@@ -1,0 +1,127 @@
+openapi: 3.0.1
+info:
+  title: Vonage Video Archives Sessions API
+  description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
+  termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
+  contact:
+    name: Vonage Video API Support
+    url: https://api.support.vonage.com/hc/en-us
+  version: '2.0'
+servers:
+- url: https://video.api.vonage.com/v2
+  description: Vonage Video Cloud REST API
+security:
+- bearerAuth: []
+tags:
+- name: Sessions
+  description: Create sessions and manage connections.
+paths:
+  /session/create:
+    post:
+      operationId: createSession
+      tags:
+      - Sessions
+      summary: Create a session
+      description: Creates a new Vonage Video session and returns its session ID. The session ID is then used by clients and by other REST operations.
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+      responses:
+        '200':
+          description: Session created.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/connection:
+    get:
+      operationId: listConnections
+      tags:
+      - Sessions
+      summary: List active connections in a session
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: A list of active connections.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /project/{applicationId}/session/{sessionId}/migrate:
+    post:
+      operationId: migrateSession
+      tags:
+      - Sessions
+      summary: Migrate a session to a different media region
+      parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: Migration initiated.
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    Session:
+      type: object
+      properties:
+        session_id:
+          type: string
+        application_id:
+          type: string
+        create_dt:
+          type: string
+        media_server_url:
+          type: string
+    CreateSessionRequest:
+      type: object
+      properties:
+        archiveMode:
+          type: string
+          enum:
+          - manual
+          - always
+          default: manual
+        location:
+          type: string
+          description: IP address used to choose the session media region.
+        p2p.preference:
+          type: string
+          enum:
+          - enabled
+          - disabled
+          description: Whether the session uses relayed (routed) or peer-to-peer media.
+        e2ee:
+          type: boolean
+          description: Enable end-to-end encryption for the session.
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: A JWT generated from your Vonage application's private key and application ID, sent in the Authorization header.
