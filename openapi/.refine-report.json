@@ -1,0 +1,30 @@
+{
+  "provider": "vonage-video",
+  "sources": [
+    "vonage-video-archives-api-openapi.yml",
+    "vonage-video-broadcasts-api-openapi.yml",
+    "vonage-video-captions-api-openapi.yml",
+    "vonage-video-moderation-api-openapi.yml",
+    "vonage-video-render-api-openapi.yml",
+    "vonage-video-sessions-api-openapi.yml",
+    "vonage-video-signaling-api-openapi.yml",
+    "vonage-video-sip-api-openapi.yml",
+    "vonage-video-streams-api-openapi.yml"
+  ],
+  "outputs": [
+    "vonage-video-archives-api-openapi.yml",
+    "vonage-video-broadcasts-api-openapi.yml",
+    "vonage-video-captions-api-openapi.yml",
+    "vonage-video-moderation-api-openapi.yml",
+    "vonage-video-render-api-openapi.yml",
+    "vonage-video-sessions-api-openapi.yml",
+    "vonage-video-signaling-api-openapi.yml",
+    "vonage-video-sip-api-openapi.yml",
+    "vonage-video-streams-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
