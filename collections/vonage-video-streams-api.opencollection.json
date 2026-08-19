@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video Archives Streams API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Streams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information on all streams in a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/stream",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get information on all streams in a session"
+        },
+        {
+          "info": {
+            "name": "Change stream layout classes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/stream",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change stream layout classes"
+        },
+        {
+          "info": {
+            "name": "Get information on a single stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/stream/:streamId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "streamId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get information on a single stream"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

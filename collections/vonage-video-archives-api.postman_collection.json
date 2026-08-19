@@ -1,0 +1,1395 @@
+{
+  "item": [
+    {
+      "id": "d0b2d718-7037-4562-935e-4f96ead4cd8a",
+      "name": "Archives",
+      "description": {
+        "content": "Record sessions as composed or individual-stream archives.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8f89f8d9-7e1f-42e0-a526-54893ba2f0bd",
+          "name": "List archives for a project",
+          "request": {
+            "name": "List archives for a project",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sessionId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4309fbfa-2ed7-43cc-95f1-f947d86dd9cd",
+              "name": "A list of archives.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sessionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9245,\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"failed\",\n      \"sessionId\": \"string\",\n      \"applicationId\": \"string\",\n      \"name\": \"string\",\n      \"createdAt\": 3874,\n      \"duration\": 2370,\n      \"size\": 9940,\n      \"outputMode\": \"string\",\n      \"resolution\": \"string\",\n      \"hasAudio\": true,\n      \"hasVideo\": true,\n      \"url\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"stopped\",\n      \"sessionId\": \"string\",\n      \"applicationId\": \"string\",\n      \"name\": \"string\",\n      \"createdAt\": 5658,\n      \"duration\": 4836,\n      \"size\": 198,\n      \"outputMode\": \"string\",\n      \"resolution\": \"string\",\n      \"hasAudio\": true,\n      \"hasVideo\": false,\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2294e2f-d024-44a6-bf8c-76b548d55d93",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sessionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49fc165e-6800-4142-afd6-a90dbe5fb16f",
+          "name": "Start an archive (recording)",
+          "request": {
+            "name": "Start an archive (recording)",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"<string>\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"name\": \"<string>\",\n  \"outputMode\": \"composed\",\n  \"resolution\": \"<string>\",\n  \"streamMode\": \"<string>\",\n  \"layout\": {\n    \"type\": \"<string>\",\n    \"stylesheet\": \"<string>\",\n    \"screenshareType\": \"<string>\"\n  },\n  \"multiArchiveTag\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "80eaf706-33bd-422f-bf45-0e87b3ba55d1",
+              "name": "Archive started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sessionId\": \"<string>\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"name\": \"<string>\",\n  \"outputMode\": \"composed\",\n  \"resolution\": \"<string>\",\n  \"streamMode\": \"<string>\",\n  \"layout\": {\n    \"type\": \"<string>\",\n    \"stylesheet\": \"<string>\",\n    \"screenshareType\": \"<string>\"\n  },\n  \"multiArchiveTag\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"deleted\",\n  \"sessionId\": \"string\",\n  \"applicationId\": \"string\",\n  \"name\": \"string\",\n  \"createdAt\": 5671,\n  \"duration\": 9889,\n  \"size\": 1800,\n  \"outputMode\": \"string\",\n  \"resolution\": \"string\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbd02fa7-6ae5-4e2a-b69e-173757c6948a",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sessionId\": \"<string>\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"name\": \"<string>\",\n  \"outputMode\": \"composed\",\n  \"resolution\": \"<string>\",\n  \"streamMode\": \"<string>\",\n  \"layout\": {\n    \"type\": \"<string>\",\n    \"stylesheet\": \"<string>\",\n    \"screenshareType\": \"<string>\"\n  },\n  \"multiArchiveTag\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "90b00a3a-3dbd-4b7c-8d41-5f655bd3339f",
+              "name": "Conflict - the session is already being archived or has no clients.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sessionId\": \"<string>\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"name\": \"<string>\",\n  \"outputMode\": \"composed\",\n  \"resolution\": \"<string>\",\n  \"streamMode\": \"<string>\",\n  \"layout\": {\n    \"type\": \"<string>\",\n    \"stylesheet\": \"<string>\",\n    \"screenshareType\": \"<string>\"\n  },\n  \"multiArchiveTag\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0219b8b5-daa1-4e21-b057-c25d9626be29",
+          "name": "Get an archive",
+          "request": {
+            "name": "Get an archive",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive",
+                ":archiveId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "archiveId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4907f004-8850-446c-96da-5fd0d798b1dc",
+              "name": "Archive information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"deleted\",\n  \"sessionId\": \"string\",\n  \"applicationId\": \"string\",\n  \"name\": \"string\",\n  \"createdAt\": 5671,\n  \"duration\": 9889,\n  \"size\": 1800,\n  \"outputMode\": \"string\",\n  \"resolution\": \"string\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76e93596-cf96-49de-818f-364ef8956db4",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38adf5bb-5a8c-438d-ab36-a389c07a0808",
+          "name": "Delete an archive",
+          "request": {
+            "name": "Delete an archive",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive",
+                ":archiveId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "archiveId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "855383df-f778-461c-9f84-e39e70df9427",
+              "name": "Archive deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba816682-3b58-4389-a233-2a1f54c27070",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f73baaaa-870b-4d6d-b25b-faa38a64d04f",
+              "name": "Conflict - status must be uploaded, available, or deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fbd7b3d6-db27-4c09-b0a4-fc3328fddb29",
+          "name": "Stop an archive",
+          "request": {
+            "name": "Stop an archive",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive",
+                ":archiveId",
+                "stop"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "archiveId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc813909-eae8-43de-be98-0b07e70f90e7",
+              "name": "Archive stopped.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId",
+                    "stop"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"deleted\",\n  \"sessionId\": \"string\",\n  \"applicationId\": \"string\",\n  \"name\": \"string\",\n  \"createdAt\": 5671,\n  \"duration\": 9889,\n  \"size\": 1800,\n  \"outputMode\": \"string\",\n  \"resolution\": \"string\",\n  \"hasAudio\": true,\n  \"hasVideo\": true,\n  \"url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2858d02-fc8d-4a25-83c3-58157209925c",
+              "name": "Conflict - the archive is not currently recording.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId",
+                    "stop"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b16ff2c6-3015-443e-9b5c-dc0367428e06",
+          "name": "Change the layout of a composed archive",
+          "request": {
+            "name": "Change the layout of a composed archive",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive",
+                ":archiveId",
+                "layout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "archiveId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"stylesheet\": \"<string>\",\n  \"screenshareType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4f2e774-8eb0-42d3-ba89-ad444981ff09",
+              "name": "Layout updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId",
+                    "layout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"stylesheet\": \"<string>\",\n  \"screenshareType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0fcd141-0e64-4d29-a780-e426dc6ad82a",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId",
+                    "layout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"stylesheet\": \"<string>\",\n  \"screenshareType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "53a839ae-e354-422c-8ab2-412858409c3f",
+          "name": "Add or remove streams from a composed archive",
+          "request": {
+            "name": "Add or remove streams from a composed archive",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "archive",
+                ":archiveId",
+                "streams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "archiveId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"addStream\": \"<string>\",\n  \"removeStream\": \"<string>\",\n  \"hasAudio\": \"<boolean>\",\n  \"hasVideo\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0abf8700-783e-471d-9f42-868ff833fdf1",
+              "name": "Streams updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId",
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"addStream\": \"<string>\",\n  \"removeStream\": \"<string>\",\n  \"hasAudio\": \"<boolean>\",\n  \"hasVideo\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bd469861-0ce5-477d-9e04-1c95ab44b706",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "archive",
+                    ":archiveId",
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "archiveId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"addStream\": \"<string>\",\n  \"removeStream\": \"<string>\",\n  \"hasAudio\": \"<boolean>\",\n  \"hasVideo\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://video.api.vonage.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8e950c2d-febc-43ef-ab94-95464814de16",
+    "name": "Vonage Video Archives API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.\n\nContact Support:\n Name: Vonage Video API Support",
+      "type": "text/plain"
+    }
+  }
+}

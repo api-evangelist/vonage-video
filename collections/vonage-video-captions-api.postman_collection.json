@@ -1,0 +1,270 @@
+{
+  "item": [
+    {
+      "id": "8cf59f57-0805-4fed-9563-5dd1767730d0",
+      "name": "Captions",
+      "description": {
+        "content": "Start and stop real-time live captions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f75ec6bc-8be2-4b61-b876-c86ae3b58424",
+          "name": "Start live captions",
+          "request": {
+            "name": "Start live captions",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "captions",
+                ":captionsId",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "captionsId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"<string>\",\n  \"token\": \"<string>\",\n  \"languageCode\": \"en-US\",\n  \"maxDuration\": 14400,\n  \"partialCaptions\": \"<boolean>\",\n  \"statusCallbackUrl\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "522b16a6-587b-423e-a166-e8f3f2cf2601",
+              "name": "Captions started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "captions",
+                    ":captionsId",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "captionsId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sessionId\": \"<string>\",\n  \"token\": \"<string>\",\n  \"languageCode\": \"en-US\",\n  \"maxDuration\": 14400,\n  \"partialCaptions\": \"<boolean>\",\n  \"statusCallbackUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d116368-82dd-4e1c-a83a-a7daf85fb51f",
+          "name": "Stop live captions",
+          "request": {
+            "name": "Stop live captions",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "captions",
+                ":captionsId",
+                "stop"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "captionsId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d463aae-f6e7-4d71-8ee0-28c230f11fc0",
+              "name": "Captions stopped.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "captions",
+                    ":captionsId",
+                    "stop"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "captionsId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://video.api.vonage.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "76c4c7f9-187b-4a3c-82a7-8519ae183d96",
+    "name": "Vonage Video Archives Captions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.\n\nContact Support:\n Name: Vonage Video API Support",
+      "type": "text/plain"
+    }
+  }
+}

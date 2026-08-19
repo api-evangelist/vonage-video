@@ -1,0 +1,587 @@
+{
+  "item": [
+    {
+      "id": "87b7d896-db79-4e8e-a3b4-c8f2382b59d7",
+      "name": "Sessions",
+      "description": {
+        "content": "Create sessions and manage connections.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2bdb3f76-cf0e-4b7a-9008-21b0976972fd",
+          "name": "Create a session",
+          "request": {
+            "name": "Create a session",
+            "description": {
+              "content": "Creates a new Vonage Video session and returns its session ID. The session ID is then used by clients and by other REST operations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "session",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "archiveMode",
+                  "value": "manual"
+                },
+                {
+                  "disabled": false,
+                  "key": "location",
+                  "value": "<string>",
+                  "description": "IP address used to choose the session media region."
+                },
+                {
+                  "disabled": false,
+                  "key": "p2p.preference",
+                  "value": "<string>",
+                  "description": "Whether the session uses relayed (routed) or peer-to-peer media."
+                },
+                {
+                  "disabled": false,
+                  "key": "e2ee",
+                  "value": "<boolean>",
+                  "description": "Enable end-to-end encryption for the session."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "81448d46-2f53-416c-8cd0-7294d97c00ef",
+              "name": "Session created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "archiveMode",
+                      "value": "manual"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IP address used to choose the session media region.",
+                        "type": "text/plain"
+                      },
+                      "key": "location",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether the session uses relayed (routed) or peer-to-peer media.",
+                        "type": "text/plain"
+                      },
+                      "key": "p2p.preference",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Enable end-to-end encryption for the session.",
+                        "type": "text/plain"
+                      },
+                      "key": "e2ee",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"session_id\": \"string\",\n    \"application_id\": \"string\",\n    \"create_dt\": \"string\",\n    \"media_server_url\": \"string\"\n  },\n  {\n    \"session_id\": \"string\",\n    \"application_id\": \"string\",\n    \"create_dt\": \"string\",\n    \"media_server_url\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46281ba0-3215-40c0-b948-1f5e8eeee32e",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "archiveMode",
+                      "value": "manual"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "IP address used to choose the session media region.",
+                        "type": "text/plain"
+                      },
+                      "key": "location",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Whether the session uses relayed (routed) or peer-to-peer media.",
+                        "type": "text/plain"
+                      },
+                      "key": "p2p.preference",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Enable end-to-end encryption for the session.",
+                        "type": "text/plain"
+                      },
+                      "key": "e2ee",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68dbdf1d-becb-4dcd-95a8-4d0a887bd747",
+          "name": "List active connections in a session",
+          "request": {
+            "name": "List active connections in a session",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "session",
+                ":sessionId",
+                "connection"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sessionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5d7d913-0a11-42d5-be27-8f65a5fcbaf3",
+              "name": "A list of active connections.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "session",
+                    ":sessionId",
+                    "connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "190fc74d-519e-43aa-bc43-96d88cad050b",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "session",
+                    ":sessionId",
+                    "connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91ed06e0-b9c2-4844-b931-eb0e322256ab",
+          "name": "Migrate a session to a different media region",
+          "request": {
+            "name": "Migrate a session to a different media region",
+            "description": {},
+            "url": {
+              "path": [
+                "project",
+                ":applicationId",
+                "session",
+                ":sessionId",
+                "migrate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sessionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a2d3c99a-f4ea-4036-a35c-84f83b5caf79",
+              "name": "Migration initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "session",
+                    ":sessionId",
+                    "migrate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "46de02b8-782a-480e-8dc4-c351e5413aef",
+              "name": "Authentication failed or the JWT is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project",
+                    ":applicationId",
+                    "session",
+                    ":sessionId",
+                    "migrate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) The Vonage application ID (formerly OpenTok API key)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://video.api.vonage.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5c18f09-bcce-45a8-ac37-5bb98475cc30",
+    "name": "Vonage Video Archives Sessions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.\n\nContact Support:\n Name: Vonage Video API Support",
+      "type": "text/plain"
+    }
+  }
+}

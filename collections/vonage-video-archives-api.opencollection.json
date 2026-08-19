@@ -1,0 +1,209 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video Archives API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Archives",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List archives for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List archives for a project"
+        },
+        {
+          "info": {
+            "name": "Start an archive (recording)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start an archive (recording)"
+        },
+        {
+          "info": {
+            "name": "Get an archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive/:archiveId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "archiveId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an archive"
+        },
+        {
+          "info": {
+            "name": "Delete an archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive/:archiveId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "archiveId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an archive"
+        },
+        {
+          "info": {
+            "name": "Stop an archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive/:archiveId/stop",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "archiveId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop an archive"
+        },
+        {
+          "info": {
+            "name": "Change the layout of a composed archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive/:archiveId/layout",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "archiveId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the layout of a composed archive"
+        },
+        {
+          "info": {
+            "name": "Add or remove streams from a composed archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/archive/:archiveId/streams",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "archiveId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add or remove streams from a composed archive"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

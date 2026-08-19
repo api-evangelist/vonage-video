@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video Archives Moderation API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Moderation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Force a client to disconnect",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/connection/:connectionId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Force a client to disconnect"
+        },
+        {
+          "info": {
+            "name": "Mute all streams in a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/mute",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mute all streams in a session"
+        },
+        {
+          "info": {
+            "name": "Mute a single stream",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/stream/:streamId/mute",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "streamId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Mute a single stream"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

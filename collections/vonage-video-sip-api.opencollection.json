@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video Archives SIP API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SIP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dial a SIP endpoint into a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/dial",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dial a SIP endpoint into a session"
+        },
+        {
+          "info": {
+            "name": "Play DTMF tones to all connections in a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/play-dtmf",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Play DTMF tones to all connections in a session"
+        },
+        {
+          "info": {
+            "name": "Play DTMF tones to a single connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/connection/:connectionId/play-dtmf",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Play DTMF tones to a single connection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video Archives Captions API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Captions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start live captions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/captions/:captionsId/start",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "captionsId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start live captions"
+        },
+        {
+          "info": {
+            "name": "Stop live captions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/captions/:captionsId/stop",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "captionsId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop live captions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vonage Video Archives Sessions API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/session/create",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Creates a new Vonage Video session and returns its session ID. The session ID is then used by clients and by other REST operations."
+        },
+        {
+          "info": {
+            "name": "List active connections in a session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/connection",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List active connections in a session"
+        },
+        {
+          "info": {
+            "name": "Migrate a session to a different media region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://video.api.vonage.com/v2/project/:applicationId/session/:sessionId/migrate",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The Vonage application ID (formerly OpenTok API key)."
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Migrate a session to a different media region"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
