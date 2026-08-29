@@ -7,6 +7,18 @@ description: Vonage Video API (formerly OpenTok / TokBox) is a programmable live
   Its REST API on the Vonage Video Cloud creates sessions and drives advanced server-side
   features - recording (archives), live streaming broadcasts, signaling, SIP interconnect,
   and the Experience Composer render service - authenticated with JWT Bearer tokens.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
