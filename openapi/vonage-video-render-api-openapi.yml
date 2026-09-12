@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Vonage Video Archives Render API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
@@ -93,6 +93,14 @@ paths:
         '200':
           description: Render stopped.
 components:
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   schemas:
     StartRenderRequest:
       type: object
@@ -151,14 +159,6 @@ components:
   responses:
     NotFound:
       description: The requested resource was not found.
-  parameters:
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

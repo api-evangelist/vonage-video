@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Vonage Video Archives API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
@@ -175,12 +175,79 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
-    NotFound:
-      description: The requested resource was not found.
   schemas:
+    StartArchiveRequest:
+      type: object
+      required:
+      - sessionId
+      properties:
+        sessionId:
+          type: string
+        hasAudio:
+          type: boolean
+          default: true
+        hasVideo:
+          type: boolean
+          default: true
+        name:
+          type: string
+        outputMode:
+          type: string
+          enum:
+          - composed
+          - individual
+          default: composed
+        resolution:
+          type: string
+          enum:
+          - 640x480
+          - 1280x720
+          - 1920x1080
+        streamMode:
+          type: string
+          enum:
+          - auto
+          - manual
+        layout:
+          $ref: '#/components/schemas/Layout'
+        multiArchiveTag:
+          type: string
+    ArchiveList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Archive'
+    Layout:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bestFit
+          - pip
+          - verticalPresentation
+          - horizontalPresentation
+          - focus
+          - custom
+        stylesheet:
+          type: string
+        screenshareType:
+          type: string
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
     Archive:
       type: object
       properties:
@@ -219,80 +286,14 @@ components:
         hasVideo:
           type: boolean
         url:
-          type: string
-          nullable: true
-    StreamSelectionRequest:
-      type: object
-      properties:
-        addStream:
-          type: string
-        removeStream:
-          type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
-    ArchiveList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Archive'
-    Layout:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bestFit
-          - pip
-          - verticalPresentation
-          - horizontalPresentation
-          - focus
-          - custom
-        stylesheet:
-          type: string
-        screenshareType:
-          type: string
-    StartArchiveRequest:
-      type: object
-      required:
-      - sessionId
-      properties:
-        sessionId:
-          type: string
-        hasAudio:
-          type: boolean
-          default: true
-        hasVideo:
-          type: boolean
-          default: true
-        name:
-          type: string
-        outputMode:
-          type: string
-          enum:
-          - composed
-          - individual
-          default: composed
-        resolution:
-          type: string
-          enum:
-          - 640x480
-          - 1280x720
-          - 1920x1080
-        streamMode:
-          type: string
-          enum:
-          - auto
-          - manual
-        layout:
-          $ref: '#/components/schemas/Layout'
-        multiArchiveTag:
-          type: string
+          type:
+          - string
+          - 'null'
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

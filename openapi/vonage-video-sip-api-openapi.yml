@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Vonage Video Archives SIP API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
@@ -82,17 +82,17 @@ paths:
           description: DTMF tones played.
 components:
   parameters:
-    SessionId:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        type: string
     ApplicationId:
       name: applicationId
       in: path
       required: true
       description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
       schema:
         type: string
     ConnectionId:
@@ -101,6 +101,9 @@ components:
       required: true
       schema:
         type: string
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   schemas:
     DtmfRequest:
       type: object
@@ -154,9 +157,6 @@ components:
               type: boolean
             observeForceMute:
               type: boolean
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

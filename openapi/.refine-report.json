@@ -25,6 +25,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "vonage-video-archives-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-broadcasts-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-captions-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-moderation-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-render-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-sessions-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-signaling-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-sip-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "vonage-video-streams-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

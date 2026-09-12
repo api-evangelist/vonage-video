@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Vonage Video Archives Streams API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
@@ -75,7 +75,41 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    StreamId:
+      name: streamId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
+    SetStreamClassRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              layoutClassList:
+                type: array
+                items:
+                  type: string
     StreamList:
       type: object
       properties:
@@ -102,40 +136,6 @@ components:
           type: array
           items:
             type: string
-    SetStreamClassRequest:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              layoutClassList:
-                type: array
-                items:
-                  type: string
-  parameters:
-    SessionId:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
-    StreamId:
-      name: streamId
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
     NotFound:
       description: The requested resource was not found.

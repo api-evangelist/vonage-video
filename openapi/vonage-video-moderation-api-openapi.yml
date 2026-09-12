@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Vonage Video Archives Moderation API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
@@ -70,8 +70,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   parameters:
-    SessionId:
-      name: sessionId
+    StreamId:
+      name: streamId
       in: path
       required: true
       schema:
@@ -83,8 +83,8 @@ components:
       description: The Vonage application ID (formerly OpenTok API key).
       schema:
         type: string
-    StreamId:
-      name: streamId
+    SessionId:
+      name: sessionId
       in: path
       required: true
       schema:
@@ -95,11 +95,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
   schemas:
     MuteSessionRequest:
       type: object
@@ -112,6 +107,11 @@ components:
           type: array
           items:
             type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http
