@@ -37,6 +37,12 @@ tags:
 - Video
 - WebRTC
 - Live Streaming
+- Real-Time Communication
+- CPaaS
+tags_raw:
+- Video
+- WebRTC
+- Live Streaming
 - Real-Time Communications
 - CPaaS
 created: '2026-06-20'
@@ -77,6 +83,8 @@ apis:
   humanURL: https://developer.vonage.com/en/video/overview
   baseURL: https://video.api.vonage.com/v2
   tags:
+  - Broadcast
+  tags_raw:
   - Broadcasts
   properties:
   - type: OpenAPI
