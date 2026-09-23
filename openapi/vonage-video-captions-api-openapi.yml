@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Vonage Video Archives Captions API
+  title: Vonage Video Captions API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
   termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
   contact:
@@ -55,14 +55,6 @@ paths:
         '200':
           description: Captions stopped.
 components:
-  parameters:
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
   schemas:
     StartCaptionsRequest:
       type: object
@@ -84,6 +76,14 @@ components:
           type: boolean
         statusCallbackUrl:
           type: string
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

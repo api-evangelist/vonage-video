@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Vonage Video Archives Streams API
+  title: Vonage Video Streams API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
   termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
   contact:
@@ -82,6 +82,12 @@ components:
       required: true
       schema:
         type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
     ApplicationId:
       name: applicationId
       in: path
@@ -89,13 +95,24 @@ components:
       description: The Vonage application ID (formerly OpenTok API key).
       schema:
         type: string
-    SessionId:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
+    Stream:
+      type: object
+      properties:
+        id:
+          type: string
+        videoType:
+          type: string
+          enum:
+          - camera
+          - screen
+          - custom
+        name:
+          type: string
+        layoutClassList:
+          type: array
+          items:
+            type: string
     SetStreamClassRequest:
       type: object
       properties:
@@ -119,28 +136,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stream'
-    Stream:
-      type: object
-      properties:
-        id:
-          type: string
-        videoType:
-          type: string
-          enum:
-          - camera
-          - screen
-          - custom
-        name:
-          type: string
-        layoutClassList:
-          type: array
-          items:
-            type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
     Forbidden:
       description: Authentication failed or the JWT is invalid.
+    NotFound:
+      description: The requested resource was not found.
   securitySchemes:
     bearerAuth:
       type: http

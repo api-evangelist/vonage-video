@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Vonage Video Archives Render API
+  title: Vonage Video Render API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
   termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
   contact:
@@ -93,15 +93,32 @@ paths:
         '200':
           description: Render stopped.
 components:
-  parameters:
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
   schemas:
+    Render:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - starting
+          - started
+          - stopped
+          - failed
+        streamId:
+          type: string
+        url:
+          type: string
+        resolution:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
     StartRenderRequest:
       type: object
       required:
@@ -131,34 +148,17 @@ components:
           properties:
             name:
               type: string
-    Render:
-      type: object
-      properties:
-        id:
-          type: string
-        sessionId:
-          type: string
-        applicationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - starting
-          - started
-          - stopped
-          - failed
-        streamId:
-          type: string
-        url:
-          type: string
-        resolution:
-          type: string
-        createdAt:
-          type: integer
-          format: int64
   responses:
     NotFound:
       description: The requested resource was not found.
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

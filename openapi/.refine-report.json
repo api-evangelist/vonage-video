@@ -1,15 +1,7 @@
 {
   "provider": "vonage-video",
   "sources": [
-    "vonage-video-archives-api-openapi.yml",
-    "vonage-video-broadcasts-api-openapi.yml",
-    "vonage-video-captions-api-openapi.yml",
-    "vonage-video-moderation-api-openapi.yml",
-    "vonage-video-render-api-openapi.yml",
-    "vonage-video-sessions-api-openapi.yml",
-    "vonage-video-signaling-api-openapi.yml",
-    "vonage-video-sip-api-openapi.yml",
-    "vonage-video-streams-api-openapi.yml"
+    "_original/vonage-video-openapi.yml"
   ],
   "outputs": [
     "vonage-video-archives-api-openapi.yml",
@@ -17,25 +9,28 @@
     "vonage-video-captions-api-openapi.yml",
     "vonage-video-moderation-api-openapi.yml",
     "vonage-video-render-api-openapi.yml",
+    "vonage-video-sip-api-openapi.yml",
     "vonage-video-sessions-api-openapi.yml",
     "vonage-video-signaling-api-openapi.yml",
-    "vonage-video-sip-api-openapi.yml",
     "vonage-video-streams-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "vonage-video-archives-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-broadcasts-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-captions-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-moderation-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-render-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-sessions-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-signaling-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-sip-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "vonage-video-streams-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "vonage-video-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "vonage-video-archives-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-broadcasts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-captions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-moderation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-render-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-sessions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-signaling-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-sip-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vonage-video-streams-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

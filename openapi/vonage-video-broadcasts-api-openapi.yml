@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Vonage Video Archives Broadcasts API
+  title: Vonage Video Broadcasts API
   description: REST API for the Vonage Video platform (formerly OpenTok / TokBox). The Vonage Video Cloud creates and manages real-time video sessions and provides advanced server-side features including archiving (recording), live streaming broadcasts, signaling, moderation, SIP interconnect, live captions, and the Experience Composer render service. Requests are authenticated with a JWT Bearer token generated from your Vonage application credentials.
   termsOfService: https://www.vonage.com/legal/communications-apis/terms-of-use/
   contact:
@@ -142,7 +142,57 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  parameters:
+    BroadcastId:
+      name: broadcastId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   schemas:
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
+    BroadcastList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
+    Layout:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bestFit
+          - pip
+          - verticalPresentation
+          - horizontalPresentation
+          - focus
+          - custom
+        stylesheet:
+          type: string
+        screenshareType:
+          type: string
     Broadcast:
       type: object
       properties:
@@ -222,61 +272,11 @@ components:
           $ref: '#/components/schemas/Layout'
         multiBroadcastTag:
           type: string
-    BroadcastList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Broadcast'
-    Layout:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bestFit
-          - pip
-          - verticalPresentation
-          - horizontalPresentation
-          - focus
-          - custom
-        stylesheet:
-          type: string
-        screenshareType:
-          type: string
-    StreamSelectionRequest:
-      type: object
-      properties:
-        addStream:
-          type: string
-        removeStream:
-          type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
-  parameters:
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
-    BroadcastId:
-      name: broadcastId
-      in: path
-      required: true
-      schema:
-        type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
     Forbidden:
       description: Authentication failed or the JWT is invalid.
+    NotFound:
+      description: The requested resource was not found.
   securitySchemes:
     bearerAuth:
       type: http
