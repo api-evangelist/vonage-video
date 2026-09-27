@@ -69,9 +69,20 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
+  parameters:
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   schemas:
     Session:
       type: object
@@ -105,20 +116,9 @@ components:
         e2ee:
           type: boolean
           description: Enable end-to-end encryption for the session.
-  parameters:
-    SessionId:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

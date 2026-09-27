@@ -69,6 +69,18 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  schemas:
+    MuteSessionRequest:
+      type: object
+      required:
+      - active
+      properties:
+        active:
+          type: boolean
+        excludedStreamIds:
+          type: array
+          items:
+            type: string
   parameters:
     StreamId:
       name: streamId
@@ -76,14 +88,14 @@ components:
       required: true
       schema:
         type: string
-    ConnectionId:
-      name: connectionId
+    SessionId:
+      name: sessionId
       in: path
       required: true
       schema:
         type: string
-    SessionId:
-      name: sessionId
+    ConnectionId:
+      name: connectionId
       in: path
       required: true
       schema:
@@ -100,18 +112,6 @@ components:
       description: Authentication failed or the JWT is invalid.
     NotFound:
       description: The requested resource was not found.
-  schemas:
-    MuteSessionRequest:
-      type: object
-      required:
-      - active
-      properties:
-        active:
-          type: boolean
-        excludedStreamIds:
-          type: array
-          items:
-            type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -58,18 +58,15 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
   parameters:
-    ConnectionId:
-      name: connectionId
+    SessionId:
+      name: sessionId
       in: path
       required: true
       schema:
         type: string
-    SessionId:
-      name: sessionId
+    ConnectionId:
+      name: connectionId
       in: path
       required: true
       schema:
@@ -94,6 +91,9 @@ components:
         data:
           type: string
           description: The payload of the signal.
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

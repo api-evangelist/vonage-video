@@ -94,31 +94,6 @@ paths:
           description: Render stopped.
 components:
   schemas:
-    Render:
-      type: object
-      properties:
-        id:
-          type: string
-        sessionId:
-          type: string
-        applicationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - starting
-          - started
-          - stopped
-          - failed
-        streamId:
-          type: string
-        url:
-          type: string
-        resolution:
-          type: string
-        createdAt:
-          type: integer
-          format: int64
     StartRenderRequest:
       type: object
       required:
@@ -148,6 +123,31 @@ components:
           properties:
             name:
               type: string
+    Render:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - starting
+          - started
+          - stopped
+          - failed
+        streamId:
+          type: string
+        url:
+          type: string
+        resolution:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
   responses:
     NotFound:
       description: The requested resource was not found.

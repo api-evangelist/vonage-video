@@ -81,18 +81,15 @@ paths:
         '200':
           description: DTMF tones played.
 components:
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
   parameters:
-    ConnectionId:
-      name: connectionId
+    SessionId:
+      name: sessionId
       in: path
       required: true
       schema:
         type: string
-    SessionId:
-      name: sessionId
+    ConnectionId:
+      name: connectionId
       in: path
       required: true
       schema:
@@ -157,6 +154,9 @@ components:
         digits:
           type: string
           description: The DTMF digits (0-9, *,
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

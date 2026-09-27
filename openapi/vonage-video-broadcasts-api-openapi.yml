@@ -142,21 +142,16 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  parameters:
-    BroadcastId:
-      name: broadcastId
-      in: path
-      required: true
-      schema:
-        type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
   schemas:
+    BroadcastList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
     StreamSelectionRequest:
       type: object
       properties:
@@ -168,31 +163,6 @@ components:
           type: boolean
         hasVideo:
           type: boolean
-    BroadcastList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Broadcast'
-    Layout:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bestFit
-          - pip
-          - verticalPresentation
-          - horizontalPresentation
-          - focus
-          - custom
-        stylesheet:
-          type: string
-        screenshareType:
-          type: string
     Broadcast:
       type: object
       properties:
@@ -272,6 +242,36 @@ components:
           $ref: '#/components/schemas/Layout'
         multiBroadcastTag:
           type: string
+    Layout:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bestFit
+          - pip
+          - verticalPresentation
+          - horizontalPresentation
+          - focus
+          - custom
+        stylesheet:
+          type: string
+        screenshareType:
+          type: string
+  parameters:
+    BroadcastId:
+      name: broadcastId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   responses:
     Forbidden:
       description: Authentication failed or the JWT is invalid.

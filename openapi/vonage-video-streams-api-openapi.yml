@@ -75,26 +75,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    StreamId:
-      name: streamId
-      in: path
-      required: true
-      schema:
-        type: string
-    SessionId:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
   schemas:
     Stream:
       type: object
@@ -136,6 +116,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stream'
+  parameters:
+    StreamId:
+      name: streamId
+      in: path
+      required: true
+      schema:
+        type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   responses:
     Forbidden:
       description: Authentication failed or the JWT is invalid.

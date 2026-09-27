@@ -173,47 +173,6 @@ components:
           type: boolean
         hasVideo:
           type: boolean
-    Archive:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - started
-          - stopped
-          - uploaded
-          - available
-          - failed
-          - deleted
-          - expired
-          - paused
-        sessionId:
-          type: string
-        applicationId:
-          type: string
-        name:
-          type: string
-        createdAt:
-          type: integer
-          format: int64
-        duration:
-          type: integer
-        size:
-          type: integer
-        outputMode:
-          type: string
-        resolution:
-          type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
-        url:
-          type:
-          - string
-          - 'null'
     Layout:
       type: object
       properties:
@@ -275,6 +234,47 @@ components:
           $ref: '#/components/schemas/Layout'
         multiArchiveTag:
           type: string
+    Archive:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - started
+          - stopped
+          - uploaded
+          - available
+          - failed
+          - deleted
+          - expired
+          - paused
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+        size:
+          type: integer
+        outputMode:
+          type: string
+        resolution:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
+        url:
+          type:
+          - string
+          - 'null'
   parameters:
     ArchiveId:
       name: archiveId
