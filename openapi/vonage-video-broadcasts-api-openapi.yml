@@ -143,15 +143,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    BroadcastList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Broadcast'
     StreamSelectionRequest:
       type: object
       properties:
@@ -163,36 +154,22 @@ components:
           type: boolean
         hasVideo:
           type: boolean
-    Broadcast:
+    Layout:
       type: object
       properties:
-        id:
-          type: string
-        sessionId:
-          type: string
-        applicationId:
-          type: string
-        status:
+        type:
           type: string
           enum:
-          - started
-          - stopped
-        createdAt:
-          type: integer
-          format: int64
-        maxDuration:
-          type: integer
-        resolution:
+          - bestFit
+          - pip
+          - verticalPresentation
+          - horizontalPresentation
+          - focus
+          - custom
+        stylesheet:
           type: string
-        broadcastUrls:
-          type: object
-          properties:
-            hls:
-              type: string
-            rtmp:
-              type: array
-              items:
-                type: object
+        screenshareType:
+          type: string
     StartBroadcastRequest:
       type: object
       required:
@@ -242,34 +219,57 @@ components:
           $ref: '#/components/schemas/Layout'
         multiBroadcastTag:
           type: string
-    Layout:
+    Broadcast:
       type: object
       properties:
-        type:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
           type: string
           enum:
-          - bestFit
-          - pip
-          - verticalPresentation
-          - horizontalPresentation
-          - focus
-          - custom
-        stylesheet:
+          - started
+          - stopped
+        createdAt:
+          type: integer
+          format: int64
+        maxDuration:
+          type: integer
+        resolution:
           type: string
-        screenshareType:
-          type: string
+        broadcastUrls:
+          type: object
+          properties:
+            hls:
+              type: string
+            rtmp:
+              type: array
+              items:
+                type: object
+    BroadcastList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
   parameters:
-    BroadcastId:
-      name: broadcastId
-      in: path
-      required: true
-      schema:
-        type: string
     ApplicationId:
       name: applicationId
       in: path
       required: true
       description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    BroadcastId:
+      name: broadcastId
+      in: path
+      required: true
       schema:
         type: string
   responses:

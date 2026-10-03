@@ -148,9 +148,6 @@ components:
         createdAt:
           type: integer
           format: int64
-  responses:
-    NotFound:
-      description: The requested resource was not found.
   parameters:
     ApplicationId:
       name: applicationId
@@ -159,6 +156,9 @@ components:
       description: The Vonage application ID (formerly OpenTok API key).
       schema:
         type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
   securitySchemes:
     bearerAuth:
       type: http
