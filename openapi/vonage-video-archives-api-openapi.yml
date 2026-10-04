@@ -161,18 +161,46 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  parameters:
+    ArchiveId:
+      name: archiveId
+      in: path
+      required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
   schemas:
-    StreamSelectionRequest:
+    Layout:
       type: object
       properties:
-        addStream:
+        type:
           type: string
-        removeStream:
+          enum:
+          - bestFit
+          - pip
+          - verticalPresentation
+          - horizontalPresentation
+          - focus
+          - custom
+        stylesheet:
           type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
+        screenshareType:
+          type: string
+    ArchiveList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Archive'
     Archive:
       type: object
       properties:
@@ -214,31 +242,6 @@ components:
           type:
           - string
           - 'null'
-    ArchiveList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Archive'
-    Layout:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - bestFit
-          - pip
-          - verticalPresentation
-          - horizontalPresentation
-          - focus
-          - custom
-        stylesheet:
-          type: string
-        screenshareType:
-          type: string
     StartArchiveRequest:
       type: object
       required:
@@ -275,20 +278,17 @@ components:
           $ref: '#/components/schemas/Layout'
         multiArchiveTag:
           type: string
-  parameters:
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
-    ArchiveId:
-      name: archiveId
-      in: path
-      required: true
-      schema:
-        type: string
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
   responses:
     Forbidden:
       description: Authentication failed or the JWT is invalid.

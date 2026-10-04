@@ -82,14 +82,6 @@ paths:
           description: DTMF tones played.
 components:
   schemas:
-    DtmfRequest:
-      type: object
-      required:
-      - digits
-      properties:
-        digits:
-          type: string
-          description: The DTMF digits (0-9, *,
     DialRequest:
       type: object
       required:
@@ -125,6 +117,14 @@ components:
               type: boolean
             observeForceMute:
               type: boolean
+    DtmfRequest:
+      type: object
+      required:
+      - digits
+      properties:
+        digits:
+          type: string
+          description: The DTMF digits (0-9, *,
     SipCall:
       type: object
       properties:
@@ -135,13 +135,6 @@ components:
         streamId:
           type: string
   parameters:
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
     ConnectionId:
       name: connectionId
       in: path
@@ -152,6 +145,13 @@ components:
       name: sessionId
       in: path
       required: true
+      schema:
+        type: string
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
       schema:
         type: string
   responses:

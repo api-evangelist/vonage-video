@@ -143,17 +143,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    StreamSelectionRequest:
-      type: object
-      properties:
-        addStream:
-          type: string
-        removeStream:
-          type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
     Layout:
       type: object
       properties:
@@ -170,6 +159,26 @@ components:
           type: string
         screenshareType:
           type: string
+    BroadcastList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
     StartBroadcastRequest:
       type: object
       required:
@@ -249,15 +258,6 @@ components:
               type: array
               items:
                 type: object
-    BroadcastList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Broadcast'
   parameters:
     ApplicationId:
       name: applicationId

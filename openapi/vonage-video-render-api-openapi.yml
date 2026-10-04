@@ -93,7 +93,35 @@ paths:
         '200':
           description: Render stopped.
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
   schemas:
+    Render:
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - starting
+          - started
+          - stopped
+          - failed
+        streamId:
+          type: string
+        url:
+          type: string
+        resolution:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
     StartRenderRequest:
       type: object
       required:
@@ -123,31 +151,6 @@ components:
           properties:
             name:
               type: string
-    Render:
-      type: object
-      properties:
-        id:
-          type: string
-        sessionId:
-          type: string
-        applicationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - starting
-          - started
-          - stopped
-          - failed
-        streamId:
-          type: string
-        url:
-          type: string
-        resolution:
-          type: string
-        createdAt:
-          type: integer
-          format: int64
   parameters:
     ApplicationId:
       name: applicationId
@@ -156,9 +159,6 @@ components:
       description: The Vonage application ID (formerly OpenTok API key).
       schema:
         type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
   securitySchemes:
     bearerAuth:
       type: http
