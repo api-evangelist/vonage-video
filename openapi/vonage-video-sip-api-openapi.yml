@@ -81,7 +81,39 @@ paths:
         '200':
           description: DTMF tones played.
 components:
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    ConnectionId:
+      name: connectionId
+      in: path
+      required: true
+      schema:
+        type: string
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   schemas:
+    SipCall:
+      type: object
+      properties:
+        id:
+          type: string
+        connectionId:
+          type: string
+        streamId:
+          type: string
     DialRequest:
       type: object
       required:
@@ -125,38 +157,6 @@ components:
         digits:
           type: string
           description: The DTMF digits (0-9, *,
-    SipCall:
-      type: object
-      properties:
-        id:
-          type: string
-        connectionId:
-          type: string
-        streamId:
-          type: string
-  parameters:
-    ConnectionId:
-      name: connectionId
-      in: path
-      required: true
-      schema:
-        type: string
-    SessionId:
-      name: sessionId
-      in: path
-      required: true
-      schema:
-        type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

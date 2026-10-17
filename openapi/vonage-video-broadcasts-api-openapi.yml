@@ -159,26 +159,36 @@ components:
           type: string
         screenshareType:
           type: string
-    BroadcastList:
+    Broadcast:
       type: object
       properties:
-        count:
+        id:
+          type: string
+        sessionId:
+          type: string
+        applicationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - started
+          - stopped
+        createdAt:
           type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Broadcast'
-    StreamSelectionRequest:
-      type: object
-      properties:
-        addStream:
+          format: int64
+        maxDuration:
+          type: integer
+        resolution:
           type: string
-        removeStream:
-          type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
+        broadcastUrls:
+          type: object
+          properties:
+            hls:
+              type: string
+            rtmp:
+              type: array
+              items:
+                type: object
     StartBroadcastRequest:
       type: object
       required:
@@ -228,36 +238,26 @@ components:
           $ref: '#/components/schemas/Layout'
         multiBroadcastTag:
           type: string
-    Broadcast:
+    BroadcastList:
       type: object
       properties:
-        id:
-          type: string
-        sessionId:
-          type: string
-        applicationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - started
-          - stopped
-        createdAt:
+        count:
           type: integer
-          format: int64
-        maxDuration:
-          type: integer
-        resolution:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Broadcast'
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
           type: string
-        broadcastUrls:
-          type: object
-          properties:
-            hls:
-              type: string
-            rtmp:
-              type: array
-              items:
-                type: object
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
   parameters:
     ApplicationId:
       name: applicationId
@@ -273,10 +273,10 @@ components:
       schema:
         type: string
   responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
     NotFound:
       description: The requested resource was not found.
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

@@ -59,6 +59,13 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
     ConnectionId:
       name: connectionId
       in: path
@@ -71,16 +78,6 @@ components:
       required: true
       schema:
         type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
-  responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
   schemas:
     SignalRequest:
       type: object
@@ -94,6 +91,9 @@ components:
         data:
           type: string
           description: The payload of the signal.
+  responses:
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http

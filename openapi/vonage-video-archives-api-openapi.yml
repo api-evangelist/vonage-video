@@ -161,20 +161,6 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  parameters:
-    ArchiveId:
-      name: archiveId
-      in: path
-      required: true
-      schema:
-        type: string
-    ApplicationId:
-      name: applicationId
-      in: path
-      required: true
-      description: The Vonage application ID (formerly OpenTok API key).
-      schema:
-        type: string
   schemas:
     Layout:
       type: object
@@ -192,15 +178,6 @@ components:
           type: string
         screenshareType:
           type: string
-    ArchiveList:
-      type: object
-      properties:
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Archive'
     Archive:
       type: object
       properties:
@@ -242,6 +219,26 @@ components:
           type:
           - string
           - 'null'
+    StreamSelectionRequest:
+      type: object
+      properties:
+        addStream:
+          type: string
+        removeStream:
+          type: string
+        hasAudio:
+          type: boolean
+        hasVideo:
+          type: boolean
+    ArchiveList:
+      type: object
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Archive'
     StartArchiveRequest:
       type: object
       required:
@@ -278,22 +275,25 @@ components:
           $ref: '#/components/schemas/Layout'
         multiArchiveTag:
           type: string
-    StreamSelectionRequest:
-      type: object
-      properties:
-        addStream:
-          type: string
-        removeStream:
-          type: string
-        hasAudio:
-          type: boolean
-        hasVideo:
-          type: boolean
+  parameters:
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      description: The Vonage application ID (formerly OpenTok API key).
+      schema:
+        type: string
+    ArchiveId:
+      name: archiveId
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    Forbidden:
-      description: Authentication failed or the JWT is invalid.
     NotFound:
       description: The requested resource was not found.
+    Forbidden:
+      description: Authentication failed or the JWT is invalid.
   securitySchemes:
     bearerAuth:
       type: http
